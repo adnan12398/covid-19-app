@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= , initial-scale=">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <title>COVID-19</title>
+  <style>
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  color:#29252D;
+  font-family: 'Montserrat', sans-serif;
+  padding:10px;
+  height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center; 
+}
+
+.container{
+  border-style:solid;
+  border-color:#F5F5F4;
+  width:70%;
+  margin:0 auto;
+  border-radius:24px;
+  background:#F5F5F4;
+  padding:2%; 
+}
+
+.container h2{
+  text-align:center;
+  margin: 0 0 30px;
+}
+
+.col{
+  column-count:3;
+  column-gap:100px;
+}
+
+.card{
+  background:red;
+  width:84%;
+  padding:8%;
+  border-radius:6px;
+  margin-bottom: 20px;
+}
+
+.active-cases{
+  background:#5BC0EB;
+}
+
+.critical-cases{
+  background:#FF595E;
+}
+
+.pop{
+  background:#FFCA3A;
+}
+
+.recovered-cases{
+  background:#8AC926;
+}
+
+.total-cases{
+  background:#E00001;
+}
+
+.total-deaths{
+  background:#929487;
+}
+
+.img{
+  height:20px;
+  width:auto;
+}
+
+@media screen and (max-width:768px){
+  .col{
+  column-count:2;
+  }
+}
+
+@media screen and (max-width:500px){
+  .col{
+    column-count:1;
+  }
+}
+ 
+.name{
+  position:fixed;
+  top:520px;
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    
+    <h2>COVID-19 cases in the United Kingdom <img src="https://i.imgur.com/03BvbUK.png" class="img" alt=""> </h2>
+    
+    <div class="col">
+    <div class="active-cases card">
+      <h4>Today's Cases:</h4>
+      <h2 id="today"></h2>
+    </div>
+    
+    <div class="recovered-cases card">
+    <h4>Test Done:</h4>
+    <h2 id="recovered"></h2>    
+    </div>
+   
+    <div class="critical-cases card">
+    <h4>Critical Cases:</h4>  
+    <h2 id="critical"></h2>  
+    </div>
+    
+    <div class="total-cases card">
+    <h4>Total Cases:</h4>
+    <h2 id="total"></h2>  
+    </div>
+    
+    <div class="pop card">
+    <h4> Population:</h4>
+    <h2 id="population"></h2>  
+    </div>
+    
+    <div class="total-deaths card">
+      <h4>Total Deaths: </h4>
+      <h2 id="deaths"></h2>
+      </div>
+    </div>
+  </div>
+  <script>
+  window.onload = function(){
+  getStats(); 
+}
+ 
+function getStats() {
+fetch('https://corona.lmao.ninja/v2/countries/UK')
+.then(function(resp){return resp.json() })
+.then(function(data){
+  console.log(data);
+  let today = data.todayCases;
+  let recovered = data.testsPerOneMillion;
+  let total = data.cases;
+  let pop = data.population;
+  let crit = data.critical;
+  let rip = data.deaths;
+
+  
+  
+  
+  document.getElementById('today').innerHTML = today;
+  document.getElementById('recovered').innerHTML = recovered.toLocaleString('en');
+  document.getElementById('total').innerHTML = total.toLocaleString('en');
+  document.getElementById('population').innerHTML = pop.toLocaleString('en');
+  document.getElementById('critical').innerHTML = crit;
+  document.getElementById('deaths').innerHTML = rip.toLocaleString('en');
+  
+  
+  
+})  
+  .catch(function(){
+  console.log("error");
+})
+  setTimeout(getCovidStats,21600000 )
+}
+  </script>
+</body>
+  <h4 class="name">Created by Adnan Hassan | Data taken from <a href="https://github.com/disease-sh/node-api#add-to-project" target="_blank">Coronavirus Tracker API
+</a></h4>
+</html>
